@@ -312,41 +312,115 @@ a {
 .phone-screen {
     width: 100%;
     height: 100%;
-    background: #FFFFFF;
+    background: #F0F4F8;
     border-radius: 25px;
     overflow: hidden;
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+}
+
+/* Fake status bar */
+.phone-screen::before {
+    content: '9:41';
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1A2332;
+    padding: 10px 20px 4px;
+    font-family: var(--font-primary);
+    letter-spacing: 0.5px;
 }
 
 .screen-content {
     width: 100%;
-    height: 100%;
-    padding: var(--spacing-lg);
+    flex: 1;
+    padding: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: #F0F4F8;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fake map background dots */
+.screen-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(79,173,220,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,173,220,0.06) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Fake road lines */
+.screen-content::after {
+    content: '';
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(79,173,220,0.25);
+    border-radius: 2px;
 }
 
 .map-ui {
     width: 100%;
     height: 100%;
-    background: transparent;
-    border-radius: var(--radius-md);
     position: relative;
-    overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    padding: 20px;
 }
 
 .phone-logo {
-    width: 120px;
+    width: 80px;
     height: auto;
     z-index: 10;
     position: relative;
+    filter: drop-shadow(0 4px 12px rgba(79,173,220,0.3));
+}
+
+/* Fake bottom nav bar */
+.map-ui::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: white;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+    border-radius: 0 0 25px 25px;
+}
+
+/* Fake top app bar */
+.map-ui::before {
+    content: 'Travv';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    background: white;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4FADDC;
+    font-family: var(--font-primary);
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 /* ========================================
@@ -586,6 +660,141 @@ a {
     padding-top: var(--spacing-lg);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.6);
+}
+
+/* ========================================
+   Waitlist Section
+   ======================================== */
+
+.waitlist {
+    padding: var(--spacing-3xl) 0;
+    background: linear-gradient(135deg, #0A1929 0%, #1a3a5c 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.waitlist::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(79,173,220,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,173,220,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.waitlist-content {
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.waitlist-badge {
+    display: inline-block;
+    background: rgba(79,173,220,0.15);
+    color: #4FADDC;
+    border: 1px solid rgba(79,173,220,0.3);
+    padding: 6px 18px;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    letter-spacing: 0.5px;
+}
+
+.waitlist-title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: var(--spacing-md);
+}
+
+.waitlist-description {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: var(--spacing-xl);
+}
+
+.waitlist-form-wrap {
+    width: 100%;
+}
+
+.waitlist-input-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.waitlist-input {
+    flex: 1;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    border: 2px solid rgba(79,173,220,0.3);
+    background: rgba(255,255,255,0.07);
+    color: #ffffff;
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    outline: none;
+    transition: var(--transition-base);
+}
+
+.waitlist-input::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+.waitlist-input:focus {
+    border-color: #4FADDC;
+    background: rgba(255,255,255,0.1);
+}
+
+.waitlist-btn {
+    padding: 16px 32px;
+    background: #4FADDC;
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    transition: var(--transition-base);
+    white-space: nowrap;
+}
+
+.waitlist-btn:hover {
+    background: #3A8AB8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79,173,220,0.3);
+}
+
+.waitlist-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.waitlist-msg {
+    margin-top: 14px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    min-height: 24px;
+    text-align: left;
+}
+
+.waitlist-msg.success { color: #4ade80; }
+.waitlist-msg.error   { color: #f87171; }
+.waitlist-msg.info    { color: #60a5fa; }
+
+@media (max-width: 560px) {
+    .waitlist-input-row {
+        flex-direction: column;
+    }
+    .waitlist-btn {
+        width: 100%;
+    }
 }
 
 /* ========================================

@@ -144,6 +144,95 @@
         </div>
     </footer>
 
+    <!-- Waitlist Section -->
+    <section class="waitlist" id="waitlist">
+        <div class="container">
+            <div class="waitlist-content">
+                <div class="waitlist-badge">🚀 Early Access</div>
+                <h2 class="waitlist-title">Join the Waitlist</h2>
+                <p class="waitlist-description">Be the first to know when new features like flight booking, hotel search, and AI voice commands launch. No spam — just the big updates.</p>
+                <div class="waitlist-form-wrap">
+                    <div class="waitlist-input-row">
+                        <input type="email" id="waitlistEmail" class="waitlist-input" placeholder="Enter your email address" />
+                        <button id="waitlistBtn" class="waitlist-btn" onclick="submitWaitlist()">
+                            <span id="waitlistBtnText">Join Waitlist</span>
+                        </button>
+                    </div>
+                    <div id="waitlistMsg" class="waitlist-msg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const SUPABASE_URL = 'https://qplsjhbyikhqhcatauli.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwbHNqaGJ5aWtocWhjYXRhdWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDMxNzMsImV4cCI6MjA4ODYxOTE3M30.Uj3P2WVh7bquOd1Vbnlq_jVFhyuB-tErihpjmpy9Cvs';
+
+        async function submitWaitlist() {
+            const email = document.getElementById('waitlistEmail').value.trim();
+            const btn = document.getElementById('waitlistBtn');
+            const btnText = document.getElementById('waitlistBtnText');
+            const msg = document.getElementById('waitlistMsg');
+
+            // Validate email
+            if (!email || !email.includes('@')) {
+                msg.textContent = '⚠️ Please enter a valid email address.';
+                msg.className = 'waitlist-msg error';
+                return;
+            }
+
+            // Loading state
+            btn.disabled = true;
+            btnText.textContent = 'Joining...';
+            msg.textContent = '';
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        joined_at: new Date().toISOString(),
+                        source: 'website'
+                    })
+                });
+
+                if (response.status === 201) {
+                    msg.textContent = '🎉 You\'re on the list! We\'ll be in touch soon.';
+                    msg.className = 'waitlist-msg success';
+                    document.getElementById('waitlistEmail').value = '';
+                    btnText.textContent = '✓ Joined!';
+                    btn.style.background = '#22c55e';
+                } else if (response.status === 409) {
+                    msg.textContent = '✅ You\'re already on the waitlist!';
+                    msg.className = 'waitlist-msg info';
+                    btnText.textContent = 'Join Waitlist';
+                    btn.disabled = false;
+                } else {
+                    throw new Error('Failed');
+                }
+            } catch (e) {
+                msg.textContent = '❌ Something went wrong. Please try again.';
+                msg.className = 'waitlist-msg error';
+                btnText.textContent = 'Join Waitlist';
+                btn.disabled = false;
+            }
+        }
+
+        // Allow pressing Enter to submit
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('waitlistEmail').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') submitWaitlist();
+            });
+        });
+
+    </script>
+
     <script>
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
