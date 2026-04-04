@@ -231,11 +231,11 @@
         document.querySelectorAll('.feature-card, .cta-content').forEach(el => observer.observe(el));
 
         document.getElementById('googlePlayLink').addEventListener('click', function(e) {
-            const url = 'YOUR_GOOGLE_PLAY_LINK';
+            const url = 'https://play.google.com/store/apps/details?id=app.roork.travv';
             if (url !== 'YOUR_GOOGLE_PLAY_LINK') { window.open(url, '_blank'); } else { e.preventDefault(); alert('Google Play Store link coming soon!'); }
         });
         document.getElementById('appStoreLink').addEventListener('click', function(e) {
-            const url = 'YOUR_APP_STORE_LINK';
+            const url = 'https://apps.apple.com/us/app/travv/id6759311123';
             if (url !== 'YOUR_APP_STORE_LINK') { window.open(url, '_blank'); } else { e.preventDefault(); alert('App Store link coming soon!'); }
         });
     </script>
